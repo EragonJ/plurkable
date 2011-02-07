@@ -48,12 +48,13 @@ Special Thanks
 ==============
 
 ( You can get the latest version of Date format library from the link )
+
 [Steven Levithan's Date format library](http://blog.stevenlevithan.com/archives/date-time-format)
 
 Snapshot
 ========
 
-...
+![plurkable Snapshot](https://github.com/EragonJ/plurkable/raw/master/snap/plurkable.png)
 
 Author
 ======

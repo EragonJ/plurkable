@@ -1,3 +1,12 @@
+/*
+ * plurkable - lightweight jQuery plugin for customizing Plurk widgets
+ *
+ * Version : 1.0
+ * Author  : EragonJ | 陳佳隆
+ * Email   : eragonj@hax4.in | jack.xxlong@gmail.com
+ * Blog    : http://eragonj.hax4.in
+ *
+ */
 (function() {
 
   var _this = null;

@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title></title>
+<style type="text/css" media="screen">
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    color:#FFFFFF;
+    background-color: #2E3030;
+    font-size: 13px;
+    padding:20px;
+    text-align:center;
+  }
+
+  code {
+    white-space: pre;
+  }
+
+  #introduction {
+    display:inline-block;
+    width:520px;
+    text-align: justify;
+    letter-spacing: 1px;
+    float:left;
+  }
+
+  #introduction p {
+    padding: 10px 10px 10px 20px;
+    line-height: 150%;
+  }
+
+  #plurk {
+    display:inline-block;
+    border:solid 5px #191919;
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    background-color:#242424;
+    padding:20px;
+    margin:0px 10px 10px 20px;
+    width: 300px;
+    /* set with overflow attribute*/
+    /*
+    height: 500px; 
+    overflow-x:hidden;
+    overflow-y:auto;
+    */
+  }
+
+  #wrapper {
+    display:inline-block;
+  }
+
+  .plurkList li{
+    list-style: none;
+    line-height: 150%;
+  }
+
+  .plurk_block {
+    border-bottom: 1px solid black;
+    border-top:0;
+    padding: 10px;
+  }
+
+  .plurk_content {
+    text-align:left;
+  }
+
+  .plurk_options {
+    text-align: right;
+    margin-top:5px;
+  }
+
+  .plurk_date {
+    font-size:80%;
+  }
+
+  a:link { text-decoration:underline; color:#FFF;}
+  a:active { text-decoration:underline; color:#FFF;}
+  a:hover { text-decoration:underline; color:#FFF;}
+  a:visited { text-decoration:underline; color:#FFF;}
+</style>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script src="date.format.js" type="text/javascript" charset="utf-8"></script>
+<script src="jquery-1.4.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="jquery.plurkable.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function() {
+    $("#plurk").plurkable({
+      num         : 6,
+      username    : 'EragonJ',
+      date_format : 'default',
+      show_link   : true,
+      show_date   : true
+    });
+  });
+</script>
+</head>
+<body>
+<div id="wrapper">
+<div id="introduction">
+  <img src="logo.png"/>
+  <p>Plurkableー輕量級 jQuery plugin，可以輕易的與 Web application 做整合。提供比原本 Plurk Widget 更加高度客制化的功能，你能夠依自己的需求依參數來調整 Layout，未來將 support 多人帳號混用。<a href="http://github.com/EragonJ/jquery.plurkable.js"><b>下載</b></a></p>
+  <p>
+  你只需要做以下設定即可：
+    <code>
+    $(document).ready(function() {
+      $("#plurk").plurkable({
+        num         : 6,           // 顯示噗數（最多 20 則）
+        username    : 'EragonJ',   // 使用者帳號
+        date_format : 'default',   // 時間格式
+        show_link   : true,        // 是否要顯示連結
+        show_date   : true         // 是否要顯示日期
+      });
+    });
+    </code>
+  </p>
+  <p>CSS 樣式與靈感是來自 <a href="http://plugins.theodin.co.uk/jquery/tweetable/tweetable.1.6/index.html">Tweetable</a>，動機則是過新年太無聊 ... </p>
+  <p>format 的部分則使用了 Steven Levithan 的 <a href="http://blog.stevenlevithan.com/archives/date-time-format">Date Format Library</a></p>
+</div>
+<div id="plurk"></div>
+</div>
+</body>
+</html>

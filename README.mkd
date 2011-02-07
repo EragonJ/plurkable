@@ -1,0 +1,64 @@
+Introduction
+============
+
+plurkable - Lightweight jQuery plugin that you can easily customize your own plurk widget.
+
+Demo
+====
+
+open demo.html
+
+Installation
+============
+
+1. Include jquery-1.x.min.js.
+2. Include jquery.plurkable.js.
+3. Include date.format.js ( It's optional, but I recommend you to include for better date format )
+4. Your own CSS layout ( You can take demo.html for reference )
+
+USAGE
+=====
+
+    $(document).ready(function() {
+      $("#plurk").plurkable({
+        num         : 6,           // 顯示噗數（最多 20 則）
+        username    : 'EragonJ',   // 使用者帳號
+        date_format : 'default',   // 時間格式（如果不輸入則是用我自己預設的）
+        show_link   : true,        // 是否要顯示連結
+        show_date   : true         // 是否要顯示日期
+      });
+    });
+
+MEMO (important!!)
+==================
+
+Because in Javascript , it's forbidden to access resources in different domains (Cross-domain policy), 
+and it's sadly that Plurk.com doesn't support JSONP for developers, I write a perl script which helps 
+me to fetch the user's feed from Plurk.com. You can write your own to return the XML back by yourself !
+
+
+You just have to grep and modify the string **fetchFeed.pl** to your script's name and done.
+
+Inspired By
+===========
+
+[Tweetable](http://plugins.theodin.co.uk/jquery/tweetable/tweetable.1.6/index.html)
+
+Special Thanks
+==============
+
+( You can get the latest version of Date format library from the link )
+[Steven Levithan's Date format library](http://blog.stevenlevithan.com/archives/date-time-format)
+
+Snapshot
+========
+
+...
+
+Author
+======
+EragonJ | 陳佳隆
+
+Email: eragonj@hax4.in | jack.xxlong@gmail.com
+
+Blog: [My blue nowhere](http://eragonj.hax4.in)

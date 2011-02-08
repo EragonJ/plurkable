@@ -34,7 +34,7 @@
 
     var feed = $.ajax({
       async    : false,
-      url      : 'fetchFeed.pl',
+      url      : 'fetchFeed.php',
       data     : "account="+account,
       dataType : 'xml',
       error    : function() {

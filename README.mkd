@@ -6,14 +6,14 @@ plurkable - Lightweight jQuery plugin that you can easily customize your own plu
 Demo
 ====
 
-open demo.html
+[Check online demo](http://eragonj.hax4.in/toys/Plurkable/demo.html)
 
 Installation
 ============
 
-1. Include jquery-1.x.min.js.
+1. Include jquery-1.x.min.js. [Download from Google CDN](http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js)
 2. Include jquery.plurkable.js.
-3. Include date.format.js ( It's optional, but I recommend you to include for better date format )
+3. Include date.format.js ( It's optional, but I recommend you to include for better date format ) [Download](http://stevenlevithan.com/assets/misc/date.format.js)
 4. Your own CSS layout ( You can take demo.html for reference )
 
 USAGE

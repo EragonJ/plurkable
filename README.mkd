@@ -3,6 +3,11 @@ Introduction
 
 plurkable - Lightweight jQuery plugin that you can easily customize your own plurk widget.
 
+Version
+=======
+
+1.1
+
 Demo
 ====
 

@@ -1,7 +1,7 @@
 /*
  * plurkable - lightweight jQuery plugin for customizing Plurk widgets
  *
- * Version : 1.0
+ * Version : 1.1
  * Author  : EragonJ | 陳佳隆
  * Email   : eragonj@hax4.in | jack.xxlong@gmail.com
  * Blog    : http://eragonj.hax4.in
@@ -21,50 +21,49 @@
 
   function init() {
     // Get the actual $feed
-    var $feed = fetch_feed(_settings.username);
+    eval("var feed = " + fetch_feed(_settings.username));
 
     // Get the feed_info after parsing and modifications
-    var feed_info = parse_feed($feed);
+    var feed_info = parse_feed(feed.value.items);
 
     build_structure_of(feed_info);
   }
   
-  // Plurk DOESNT support jsonp 
+  // Use my customized Yahoo Pipe's 
   function fetch_feed(account) {
 
     var feed = $.ajax({
       async    : false,
-      url      : 'fetchFeed.php',
-      data     : "account="+account,
-      dataType : 'xml',
+      url      : 'http://pipes.yahoo.com/pipes/pipe.run?_id=4cce1c85385491e7bfc90071fbd820cf&_render=json',
+      data     : "username="+account,
       error    : function() {
-        alert('forbidden user');
-        throw "forbidden User , plz check !";
+        throw "forbidden User , plz check your username!";
       },
       success  : function(data) {
         return data;
       }
     }).responseText;
 
-    return $(feed);
+    return feed;
   }
 
-  function parse_feed($feed) {
+  function parse_feed(feed) {
+
+
     var feed_info = {
       pid     : [],
       content : [],
       link    : [],
       date    : [],
-      length  : 0
+      length  : feed.length
     };
 
-    $feed.find('entry').each(function() {
-      feed_info.pid.push( $(this).find('id').text() );
-      feed_info.content.push( $(this).find('content').text() );
-      feed_info.link.push( $(this).find('link').attr('href') );
-      feed_info.date.push( $(this).find('published').text() );
-      feed_info.length ++;
-    });
+    for (var i = 0; i < feed.length; i++) {
+      feed_info.pid.push( feed[i].id );
+      feed_info.content.push( feed[i].content.content );
+      feed_info.link.push( feed[i].link );
+      feed_info.date.push( feed[i].published );
+    }
 
     process(feed_info);
     return feed_info;
@@ -72,7 +71,6 @@
 
   function process(feed_info) {
     process_pid(feed_info.pid);
-    process_link(feed_info.link); 
     process_date(feed_info.date); 
   }
 
@@ -80,13 +78,6 @@
     var re = /;(\d+)$/;
     for (var i=0; i<pid.length; i++) {
       pid[i] = (pid[i].match(re))[1];
-    }
-  }
-
-  function process_link(link) {
-    var prefix = 'http://www.plurk.com';
-    for (var i=0; i<link.length; i++) {
-      link[i] = prefix + link[i]; 
     }
   }
 

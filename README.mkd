@@ -32,12 +32,9 @@ USAGE
 MEMO (important!!)
 ==================
 
-Because in Javascript , it's forbidden to access resources in different domains (Cross-domain policy), 
-and it's sadly that Plurk.com doesn't support JSONP for developers, I write a perl script which helps 
-me to fetch the user's feed from Plurk.com. You can write your own to return the XML back by yourself !
-
-
-You just have to grep and modify the string **fetchFeed.pl** to your script's name and done.
+In this branch, thanks to Yahoo pipe's support, I use it as a middleware to communicate between clients and 
+Plurk.com. It can be transformed into JSON format without server side's help. In this way, it works well than
+the previous version.
 
 Inspired By
 ===========

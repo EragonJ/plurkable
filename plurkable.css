@@ -1,0 +1,42 @@
+#plurk {
+  display:inline-block;
+  border:solid 5px #191919;
+  border-radius: 6px;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  background-color:#242424;
+  padding:20px;
+  margin:0px 10px 10px 20px;
+  width: 300px;
+  /* set with overflow attribute*/
+  /*
+  height: 500px; 
+  overflow-x:hidden;
+  overflow-y:auto;
+  */
+}
+
+.plurkList li{
+  list-style: none;
+  line-height: 150%;
+}
+
+.plurk_block {
+  border-bottom: 1px solid black;
+  border-top:0;
+  padding: 10px;
+}
+
+.plurk_content {
+  text-align:left;
+  word-break: break-all;
+}
+
+.plurk_options {
+  text-align: right;
+  margin-top:5px;
+}
+
+.plurk_date {
+  font-size:80%;
+}

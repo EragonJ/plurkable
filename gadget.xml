@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<Module>
+  <ModulePrefs title="Plurkable" /> 
+  <UserPref name="username" default_value="" required="true"/>
+  <UserPref name="date_format" default_value="default" required="true"/>
+  <Content type="html" preferred_width="360px">
+     <![CDATA[ 
+       <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+       <script src="https://github.com/EragonJ/plurkable/raw/develop_pipe/jquery.plurkable.js"></script>
+       
+       <script>
+       var prefs = new gadgets.Prefs();
+        jQuery(function($) {
+          $("#plurk").plurkable({
+            num         : 6,           // 顯示噗數（最多 20 則）
+            username    : prefs.getString("username"),   // 使用者帳號
+            date_format : prefs.getString("date_format"),   // 時間格式
+            show_link   : true,        // 是否要顯示連結
+            show_date   : true         // 是否要顯示日期
+          });
+        });
+       </script>
+       <link rel="stylesheet" src="https://github.com/EragonJ/plurkable/raw/develop_pipe/plurkable.css" />
+       <div id="plurk-wrapper">
+         <div id="plurk"></div>
+       </div>
+     ]]>
+  </Content> 
+</Module>

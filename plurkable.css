@@ -1,3 +1,13 @@
+#plurk-wrapper {
+  display:inline-block;
+  oveflow-y: auto;
+}
+
+#plurk-wrapper > * {
+  margin: 0;
+  border: 0;
+}
+
 #plurk {
   display:inline-block;
   border:solid 5px #191919;
@@ -40,3 +50,8 @@
 .plurk_date {
   font-size:80%;
 }
+
+#plurk a:link { text-decoration:underline; color:#FFF;}
+#plurk a:active { text-decoration:underline; color:#FFF;}
+#plurk a:hover { text-decoration:underline; color:#FFF;}
+#plurk a:visited { text-decoration:underline; color:#FFF;}

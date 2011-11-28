@@ -1,29 +1,226 @@
 <?xml version="1.0" encoding="UTF-8" ?> 
 <Module>
-  <ModulePrefs title="Plurkable" /> 
-  <UserPref name="username" default_value="" required="true"/>
-  <UserPref name="date_format" default_value="default" required="true"/>
-  <Content type="html" preferred_width="360px">
+  <ModulePrefs title="Plurkable" author="EragonJ" author_email="jack.xxlong@gmail.com" description="It's a tiny gadget that will show Top-n plurks of the assigned user from Plurk.com" width="320" height="200">
+    <Require feature="dynamic-height"/>
+    <Preload href="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js" />
+  </ModulePrefs>
+
+  <UserPref name="username" datatype="string" default_value="" required="true"/>
+  <UserPref name="number" datatype="string" default_value="1" required="true"/>
+  <UserPref name="date_format" datatype="string" default_value="default" required="true"/>
+
+  <Content type="html" preferred_width="320">
      <![CDATA[ 
+       <style>
+
+         #plurk > * {
+           margin: 0px;
+           padding: 0px;
+         }
+         
+         #plurk {
+           display:inline-block;
+           border:solid 5px #191919;
+           border-radius: 6px;
+           -moz-border-radius: 6px;
+           -webkit-border-radius: 6px;
+           background-color: #242424;
+           padding: 20px;
+           width: 80%;
+           font-size: 13px;
+           color: #FFFFFF;
+           text-align: center;
+         }
+
+         .plurkList li{
+           list-style: none;
+           line-height: 150%;
+         }
+         
+         .plurk_block {
+           border-bottom: 1px solid black;
+           border-top:0;
+           padding: 10px;
+         }
+         
+         .plurk_content {
+           text-align:left;
+           word-break: break-all;
+         }
+         
+         .plurk_options {
+           text-align: right;
+           margin-top:5px;
+         }
+         
+         .plurk_date {
+           font-size:80%;
+         }
+         
+         #plurk a:link { text-decoration:underline; color:#FFF;}
+         #plurk a:active { text-decoration:underline; color:#FFF;}
+         #plurk a:hover { text-decoration:underline; color:#FFF;}
+         #plurk a:visited { text-decoration:underline; color:#FFF;}
+       </style>
+
        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
-       <script src="https://github.com/EragonJ/plurkable/raw/develop_pipe/jquery.plurkable.js"></script>
-       
+      
+       <script>
+        /*
+         * plurkable - lightweight jQuery plugin for customizing Plurk widgets
+         *
+         * Version : 1.1
+         * Author  : EragonJ | 陳佳隆
+         * Email   : eragonj@hax4.in | jack.xxlong@gmail.com
+         * Blog    : http://eragonj.hax4.in
+         *
+         */
+        (function() {
+
+          var _this = null;
+
+          var _settings = {
+            num         : 20,
+            username    : 'Plurkbuddy',
+            show_link   : true,
+            show_date   : true,
+            date_format : 'yyyy/mm/dd HH:MM:ss'
+          };
+
+          function init() {
+            // Get the actual $feed
+            eval("var feed = " + fetch_feed(_settings.username));
+
+            // Get the feed_info after parsing and modifications
+            var feed_info = parse_feed(feed.value.items);
+
+            build_structure_of(feed_info);
+          }
+          
+          // Use my customized Yahoo Pipe's 
+          function fetch_feed(account) {
+
+            var feed = $.ajax({
+              async    : false,
+              url      : 'http://pipes.yahoo.com/pipes/pipe.run?_id=4cce1c85385491e7bfc90071fbd820cf&_render=json',
+              data     : "username="+account,
+              error    : function() {
+                throw "forbidden User , plz check your username!";
+              },
+              success  : function(data) {
+                return data;
+              }
+            }).responseText;
+
+            return feed;
+          }
+
+          function parse_feed(feed) {
+
+            var feed_info = {
+              pid     : [],
+              content : [],
+              link    : [],
+              date    : [],
+              length  : feed.length
+            };
+
+            for (var i = 0; i < feed.length; i++) {
+              feed_info.pid.push( feed[i].id );
+              feed_info.content.push( feed[i].content.content );
+              feed_info.link.push( feed[i].link );
+              feed_info.date.push( feed[i].published );
+            }
+
+            process(feed_info);
+            return feed_info;
+          }
+
+          function process(feed_info) {
+            process_pid(feed_info.pid);
+            process_date(feed_info.date); 
+          }
+
+          function process_pid(pid) {
+            var re = /;(\d+)$/;
+            for (var i=0; i<pid.length; i++) {
+              pid[i] = (pid[i].match(re))[1];
+            }
+          }
+
+          function process_date(date) {
+            // support formats as users wish
+            for (var i=0; i<date.length; i++) {
+              var current_date = new Date(date[i]);
+
+              // powered by Steven Levithan's format lib
+              if ( typeof Date.prototype.format != 'undefined') {
+                date[i] = current_date.format(_settings.date_format);
+              }
+              else {
+                // default 
+                date[i] = current_date.toLocaleDateString();
+              }
+            }
+          }
+
+          // DOM manipulating
+          function build_structure_of(info) {
+            $('<ul class="plurkList"></ul>').appendTo($_this);
+
+            for (var i=0; i<info.length && i<_settings.num; i++) {
+              var cache_block   = $('<li class="plurk_block"></li>');
+
+              // We must have contents , right ?
+              cache_block.append('<p class="plurk_content">'+info.content[i]+'</p>');
+              cache_block.append('<p class="plurk_options"><span class="plurk_link"></span><span class="plurk_date"></span></p>');
+
+              if (true == _settings.show_link) {
+                cache_block.find(".plurk_link").html('<a href="'+info.link[i]+'" target="_blank">Details</a> ');
+              }
+              
+              if (true == _settings.show_date) {
+                cache_block.find(".plurk_date").html(info.date[i]);
+              }
+
+              cache_block.appendTo(".plurkList");
+            }
+          }
+
+          $.fn.plurkable = function(options) {
+
+            $(this).each(function() {
+
+              // default settings
+              $.extend(_settings,options); 
+              $_this = $(this);
+
+              // in order to manipulate <div id="plurkable"></div>
+              init.apply($_this);
+            });
+
+            return this;
+          };
+
+        })(jQuery);
+       </script>
+
        <script>
        var prefs = new gadgets.Prefs();
         jQuery(function($) {
+
           $("#plurk").plurkable({
-            num         : 6,           // 顯示噗數（最多 20 則）
+            num         : prefs.getString("number"),           // 顯示噗數（最多 20 則）
             username    : prefs.getString("username"),   // 使用者帳號
             date_format : prefs.getString("date_format"),   // 時間格式
             show_link   : true,        // 是否要顯示連結
             show_date   : true         // 是否要顯示日期
           });
+
+          gadgets.window.adjustHeight();
         });
        </script>
-       <link rel="stylesheet" src="https://github.com/EragonJ/plurkable/raw/develop_pipe/plurkable.css" />
-       <div id="plurk-wrapper">
-         <div id="plurk"></div>
-       </div>
+       <div id="plurk"></div>
      ]]>
   </Content> 
 </Module>

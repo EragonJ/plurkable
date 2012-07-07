@@ -11,7 +11,7 @@ Version
 Demo
 ====
 
-[Check online demo](http://eragonj.hax4.in/toys/Plurkable/demo.html)
+[Check online demo](http://eragonj.hax4.in/toys/plurkable/demo.html)
 
 Installation
 ============
